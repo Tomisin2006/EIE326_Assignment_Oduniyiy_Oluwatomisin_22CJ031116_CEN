@@ -1,18 +1,50 @@
-def caesar(word, cipher_shift_value):
-    alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
-                'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+choice = input("Do you want to (E)ncrypt or (D)ecrypt? ")
 
-    list_word = list(word.upper())
+text = input("Enter your message: ")
+shift = int(input("Enter a shift number (e.g. 3): "))
 
-    caeser = list_word.copy()
-    for i in range(len(list_word)):
-        index = alphabet.index(list_word[i])
+result = ""
 
-        index = index + cipher_shift_value
-        if index > (len(alphabet) - 1):
-            index = index - (len(alphabet))
-            caeser[i] = alphabet[index]
+# Encryption
+if choice == "E":
+    for letter in text:
+        if 'A' <= letter <= 'Z':
+            #ord converts the letter in ASCII NUMBER 
+            new_code = ord(letter) + shift
+            if new_code > ord('Z'):
+                new_code -= 26
+            result += chr(new_code)
+ #chr turns the number back into a letter
+        elif 'a' <= letter <= 'z':
+            new_code = ord(letter) + shift
+            if new_code > ord('z'):
+                new_code -= 26
+            result += chr(new_code)
         else:
-            caeser[i] = alphabet[index]
-    return caeser
-print(caesar("leonard", 2))
+            result += letter
+
+    print("Encrypted message:", result)
+
+# Decryption
+elif choice == "D":
+    for letter in text:
+        if 'A' <= letter <= 'Z':
+            new_code = ord(letter) - shift
+            if new_code < ord('A'):
+                new_code += 26
+            result += chr(new_code)
+
+        elif 'a' <= letter <= 'z':
+            new_code = ord(letter) - shift
+            if new_code < ord('a'):
+                new_code += 26
+            result += chr(new_code)
+        else:
+            result += letter
+
+    print("Decrypted message:", result)
+
+else:
+    print("Invalid option. Please choose 'E' or 'D'.")
+
+
